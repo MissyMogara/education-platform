@@ -27,4 +27,14 @@ class Course extends Model
     {
         return $this->belongsTo(User::class, 'teacher_id');
     }
+
+    public function evaluations()
+    {
+        return $this->hasMany(Evaluation::class);
+    }
+
+    public function courseMaterials()
+    {
+        return $this->hasMany(CourseMaterial::class);
+    }
 }

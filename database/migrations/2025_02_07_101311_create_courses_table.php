@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             //$table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade'); (Is the same with constrained)
-            $table->foreignId('category_id')->constrained();
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             //$table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade'); (Is the same with constrained)
-            $table->foreignId('teacher_id')->constrained();
+            $table->foreignId('teacher_id')->constrained('users')->onDelete('cascade');
             $table->integer('duration');
             $table->enum('status', ['active', 'finished', 'cancelled']);
             $table->timestamps();

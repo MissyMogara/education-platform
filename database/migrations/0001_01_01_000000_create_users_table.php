@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\CategoryType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,7 +24,7 @@ return new class extends Migration
             $table->string('address')->nullable(); // student only
             $table->string('city')->nullable(); // student only
             $table->string('specialty')->nullable(); // teacher only
-            $table->string('role');
+            $table->enum('role', ['admin', 'student', 'teacher'])->default('student');
             $table->rememberToken();
             $table->timestamps();
         });

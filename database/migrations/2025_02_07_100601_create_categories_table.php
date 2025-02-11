@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             if (!Schema::hasTable('categories')) {
                 $table->id();
-                $table->string('name_of_the_course_area');
+                $table->enum('name_of_the_course_area', ['programming', 'design', 'marketing']);
                 $table->timestamps();
             }
         });

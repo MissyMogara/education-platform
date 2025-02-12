@@ -13,8 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call([
+            CategorySeeder::class,
+        ]);
 
+        //  ADMIN
         User::factory()->create([
             'name' => 'Miqotilla',
             'email' => 'miqotilla@example.com',
@@ -23,20 +26,23 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin'
         ]);
 
-        User::factory()->create([
-            'name' => 'Aura',
-            'email' => 'aura@example.com',
-            'dni' => '11223344A',
-            'password' => '1234',
-            'role' => 'teacher'
+        // TEACHERS
+        $this->call([
+            TeacherSeeder::class,
         ]);
 
+        //  STUDENTS
         User::factory()->create([
             'name' => 'Mini Aura',
             'email' => 'miniaura@example.com',
             'dni' => '11223355M',
             'password' => '1234',
             'role' => 'student'
+        ]);
+
+        // COURSES
+        $this->call([
+            CourseSeeder::class,
         ]);
     }
 }

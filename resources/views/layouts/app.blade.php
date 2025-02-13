@@ -36,10 +36,10 @@
             <footer class="bg-gray-800 text-white py-6">
                 <div class="container mx-auto flex flex-col items-center">
                     <div class="flex mb-4">
-                        <a href="#" class="mx-2 text-gray-400 hover:text-white">Home</a>
-                        <a href="#" class="mx-2 text-gray-400 hover:text-white">About</a>
-                        <a href="#" class="mx-2 text-gray-400 hover:text-white">Services</a>
-                        <a href="#" class="mx-2 text-gray-400 hover:text-white">Contact</a>
+                        <a href="#" class="mx-2 text-gray-400 hover:text-white p-2">Home</a>
+                        <a href="#" class="mx-2 text-gray-400 hover:text-white p-2">About</a>
+                        <a href="#" class="mx-2 text-gray-400 hover:text-white p-2">Services</a>
+                        <a href="#" class="mx-2 text-gray-400 hover:text-white p-2">Contact</a>
                     </div>
                     <p class="text-gray-400">&copy; 2025 {{ $footer }}. All rights reserved.</p>
                 </div>

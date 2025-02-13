@@ -23,7 +23,7 @@ class CourseController extends Controller
             $courses = Course::where('teacher_id', $user->id)->get();
             return view('dashboard', compact('courses'));
         } else if ($user->role === 'student') {
-            $courses = Course::with(['teacher', 'category'])->get(); // TEMPORARY
+            $courses = Course::with(['teacher', 'category'])->where('status', 'active')->paginate(10);
 
             // $inscriptions = $user->inscriptions()->get()->pluck('course_id'); // Get all courses id
             // $courses = Course::whereIn('id', $inscriptions)->get(); // Get all courses with ids in $inscriptions array
@@ -34,7 +34,11 @@ class CourseController extends Controller
     // Método para mostrar un curso específico
     public function show($id)
     {
-        //
+        $course = Course::with(['teacher', 'category'])->where('id', $id)->first();
+        if (!$course) {
+            abort(404);
+        }
+        return view('public.courses.show', compact('course'));
     }
 
     // Método para crear un nuevo curso

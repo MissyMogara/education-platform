@@ -28,6 +28,7 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
  */
 Route::middleware(['auth'])->group(function () {
     Route::get('/courses', [CourseController::class, 'index'])->name('public.course.index');
+    Route::get('/courses/{id}', [CourseController::class, 'show'])->name('public.course.show');
 });
 
 Route::middleware('auth')->group(function () {

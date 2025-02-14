@@ -41,6 +41,7 @@ class CourseController extends Controller
         return view('public.courses.show', compact('course'));
     }
 
+
     // Método para crear un nuevo curso
     public function create()
     {

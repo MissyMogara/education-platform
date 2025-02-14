@@ -8,12 +8,20 @@ use Illuminate\View\Component;
 
 class ToEnrollButton extends Component
 {
+    public $label;
+    public $route;
+    public $student;
+    public $course;
+
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($label, $route, $student, $course)
     {
-        //
+        $this->label = $label;
+        $this->route = $route;
+        $this->student = $student;
+        $this->course = $course;
     }
 
     /**

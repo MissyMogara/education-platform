@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('evaluations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('course_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('course_id')->constrained('courses')->onDelete('cascade');
             $table->unsignedBigInteger('student_id')->constrained('users')->onDelete('cascade');
             $table->double('final_grade');
             $table->string('comments');

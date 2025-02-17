@@ -77,4 +77,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Inscription::class);
     }
+
+    public function evaluations()
+    {
+        return $this->hasMany(Evaluation::class, 'student_id');
+    }
 }

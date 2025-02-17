@@ -32,7 +32,7 @@
             @if (Auth::user() && Auth::user()->isAdmin())
                 <p>{{ $course->status }}</p>
             @endif
-
+            <div class="flex justify-center items-center">
             @if (Auth::user() && Auth::user()->isStudent())
                 <x-buttons.to-enroll-button 
                 label="Inscribirse" 
@@ -41,7 +41,10 @@
                 :student="Auth::user()->id ?? null" 
                 />
             @endif
-
+            <div class="ms-2">
+                <x-buttons.link-to-button  route="public.course.index" label="Volver"/>
+            </div>
+            </div>
             @if (session('error'))
                 <div class="bg-red-500 text-white p-4 rounded mb-4 mt-4">
                     {{ session('error') }}

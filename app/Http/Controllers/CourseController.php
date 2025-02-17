@@ -17,16 +17,13 @@ class CourseController extends Controller
     {
         $user = Auth::user();
         if ($user->role === 'admin') {
-            $courses = Course::all();
+            $courses = Course::all()->paginate(10);
             return view('dashboard', compact('courses'));
         } else if ($user->role === 'teacher') {
-            $courses = Course::where('teacher_id', $user->id)->get();
-            return view('dashboard', compact('courses'));
+            $courses = Course::where('teacher_id', $user->id)->paginate(10);
+            return view('public.courses.index', compact('courses'));
         } else if ($user->role === 'student') {
             $courses = Course::with(['teacher', 'category'])->where('status', 'active')->paginate(10);
-
-            // $inscriptions = $user->inscriptions()->get()->pluck('course_id'); // Get all courses id
-            // $courses = Course::whereIn('id', $inscriptions)->get(); // Get all courses with ids in $inscriptions array
             return view('public.courses.index', compact('courses'));
         }
     }
@@ -45,7 +42,7 @@ class CourseController extends Controller
     // Método para crear un nuevo curso
     public function create()
     {
-        //
+        return view('private.courses.create');
     }
 
     // Método para almacenar un nuevo curso

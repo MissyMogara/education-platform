@@ -6,6 +6,13 @@
         </h2>
     </x-slot>
     <div class="p-4">
+        <!-- Options for admin and teachers -->
+        @if (Auth::user() && (Auth::user()->isAdmin() || Auth::user()->isTeacher()))
+        <div>
+            <x-buttons.link-to-button label="Crear curso" route="private.course.create" />
+        </div>    
+        @endif
+        
         <x-table.table>
             <thead>
                 <tr>
@@ -32,9 +39,11 @@
                 @endforeach
             </tbody>
         </x-table.table>
+        
         <div>
             {{ $courses->links() }}
         </div>
+        
     </div>
     <x-slot name="footer">
         {{ __('Mogara') }}

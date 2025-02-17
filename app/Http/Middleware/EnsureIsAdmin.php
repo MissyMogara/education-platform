@@ -22,6 +22,6 @@ class EnsureIsAdmin
         }
 
         // Redirect to login page if not admin
-        return redirect()->route('public.course.index')->with('Error', 'No tienes permisos para acceder a esta página.');
+        abort(403, 'No tienes acceso a esta sección.');
     }
 }

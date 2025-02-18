@@ -1,0 +1,1 @@
+<button type="submit" class="mt-2 w-full px-4 py-2 text-base font-medium text-center text-white bg-green-700 rounded hover:bg-green-800 focus:ring-4 focus:ring-primary-300 sm:w-auto">Guardar</button>

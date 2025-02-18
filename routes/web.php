@@ -19,6 +19,10 @@ Route::middleware(['auth', 'checkAdminOrTeacher'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
     Route::get('/courses/create', [CourseController::class, 'create'])->name('private.course.create');
+    Route::post('/courses', [CourseController::class, 'store'])->name('private.course.store');
+    Route::get('/courses/{id}/edit', [CourseController::class, 'edit'])->name('private.course.edit');
+    Route::put('/courses/{id}/update', [CourseController::class, 'update'])->name('private.course.update');
+    Route::delete('/courses/{id}/delete', [CourseController::class, 'destroy'])->name('private.course.destroy');
 });
 
 /**

@@ -16,6 +16,9 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('private.inscription.index')" :active="request()->routeIs('private.inscriptions.index')">
+                        {{ __('Inscripciones') }}
+                    </x-nav-link>
                     @endif
                     <x-nav-link :href="route('public.course.index')" :active="request()->routeIs('public.course.index')">
                         {{ __('Cursos') }}

@@ -45,4 +45,96 @@ class InscriptionController extends Controller
         ]);
         return redirect()->route('public.course.index');
     }
+
+    /**
+     * Show all inscriptions
+     */
+    public function index()
+    {
+        $user = Auth::user();
+        if ($user->role == 'admin') {
+
+            $inscriptions = Inscription::with(['course', 'student'])->paginate(10);
+            return view('private.inscriptions.index', compact('inscriptions'));
+        }
+
+        if ($user->role == 'teacher') {
+            $courses = Course::where('teacher_id', $user->id)->pluck('id');
+            $inscriptions = Inscription::with(['course', 'student'])->whereIn('course_id', $courses)->paginate(10);
+            return view('private.inscriptions.index', compact('inscriptions'));
+        }
+    }
+
+    /**
+     * Approves inscriptions
+     */
+    public function approve($id)
+    {
+        $inscription = Inscription::find($id);
+        if (!$inscription) {
+            return redirect()->back()->with('error', 'Inscripción no encontrada');
+        }
+
+        $inscription->status = 'confirmed';
+        $inscription->save();
+
+        return redirect()->route('private.inscription.index')->with('success', 'Inscripción aprobada');
+    }
+
+    /**
+     * Rejects inscriptions
+     */
+    public function reject($id)
+    {
+        $inscription = Inscription::find($id);
+        if (!$inscription) {
+            return redirect()->back()->with('error', 'Inscripción no encontrada');
+        }
+
+        $inscription->status = 'cancelled';
+        $inscription->save();
+
+        return redirect()->route('private.inscription.index')->with('success', 'Inscripción rechazada');
+    }
+
+    /**
+     * Search by
+     */
+    public function search(Request $request)
+    {
+        $query = $request->input('inscription_query');
+        $option = $request->input('option');
+
+        $user = Auth::user();
+
+        $inscriptions = Inscription::query();
+
+        if ($user->role == 'teacher') {
+            $courses = Course::where('teacher_id', $user->id)->pluck('id');
+            $inscriptions->whereIn('course_id', $courses);
+        }
+
+        switch ($option) {
+            case 'course':
+                $inscriptions->whereHas('course', function ($q) use ($query) {
+                    $q->where('name', 'LIKE', "%{$query}%");
+                });
+                break;
+            case 'status':
+                $inscriptions->where('status', 'LIKE', "%{$query}%");
+                break;
+            case 'student':
+                $inscriptions->whereHas('student', function ($q) use ($query) {
+                    $q->where('name', 'LIKE', "%{$query}%");
+                });
+                break;
+            default:
+
+                break;
+        }
+
+        $inscriptions = $inscriptions->paginate(10);
+
+        return view('private.inscriptions.index', compact('inscriptions'));
+    }
 }

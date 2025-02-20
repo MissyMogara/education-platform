@@ -15,4 +15,14 @@ class Inscription extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(User::class, 'student_id');
+    }
 }

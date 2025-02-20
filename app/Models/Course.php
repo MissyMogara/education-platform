@@ -37,4 +37,9 @@ class Course extends Model
     {
         return $this->hasMany(CourseMaterial::class);
     }
+
+    public function inscriptions()
+    {
+        return $this->hasMany(Inscription::class);
+    }
 }

@@ -24,9 +24,10 @@ Route::middleware(['auth', 'checkAdminOrTeacher'])->group(function () {
     Route::put('/courses/{id}/update', [CourseController::class, 'update'])->name('private.course.update');
     Route::delete('/courses/{id}/delete', [CourseController::class, 'destroy'])->name('private.course.destroy');
     Route::get('/inscriptions', [InscriptionController::class, 'index'])->name('private.inscription.index');
-    Route::put('inscriptions/{id}/approve', [InscriptionController::class, 'approve'])->name('private.inscription.approve');
-    Route::put('inscriptions/{id}/reject', [InscriptionController::class, 'reject'])->name('private.inscription.reject');
-    Route::get('inscriptions/search', [InscriptionController::class, 'search'])->name('private.inscription.search');
+    Route::put('/inscriptions/{id}/approve', [InscriptionController::class, 'approve'])->name('private.inscription.approve');
+    Route::put('/inscriptions/{id}/reject', [InscriptionController::class, 'reject'])->name('private.inscription.reject');
+    Route::get('/inscriptions/search', [InscriptionController::class, 'search'])->name('private.inscription.search');
+    Route::post('/evaluations', [EvaluationController::class, 'store'])->name('private.evaluation.store');
 });
 
 /**

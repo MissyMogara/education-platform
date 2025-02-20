@@ -32,6 +32,51 @@
             @if (Auth::user() && Auth::user()->isAdmin())
                 <p>{{ $course->status }}</p>
             @endif
+            @if (Auth::user() && (Auth::user()->isTeacher() || Auth::user()->isAdmin()))
+                    <div>
+                        <h3 class="text-1xl mb-2">Alumnos inscritos</h3>
+                        <hr>
+                        <ul>
+                            @foreach ($inscriptions as $inscription)
+                                <li class="flex mb-5 mt-5">
+                                    <div class="flex mt-6 me-1">
+                                        <p>
+                                            {{ $inscription->student->name }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <form action="{{ route('private.evaluation.store') }}" method="POST" class="flex">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="student_id" value="{{ $inscription->student_id }}">
+                                            <input type="hidden" name="course_id" value="{{ $course->id }}">
+                                            <div class="flex">
+                                                <div>
+                                                    <div>
+                                                        <label for="finalGrade">Nota final:</label>
+                                                    </div>
+                                                    <div>
+                                                        <input type="number" name="finalGrade" class="text-black">
+                                                    </div>
+                                                </div>
+                                                <div class="ms-1">
+                                                    <div>
+                                                        <label for="comments" class="mt-1">Comentarios:</label>
+                                                    </div>
+                                                    <div>
+                                                        <textarea name="comments" id="" cols="30" rows="1" class="text-black" style="resize: none;"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <input type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-6 ms-1" value="Enviar evaluación">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+            @endif
             <div class="flex justify-center items-center">
             @if (Auth::user() && Auth::user()->isStudent())
                 <x-buttons.to-enroll-button 

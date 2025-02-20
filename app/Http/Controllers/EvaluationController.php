@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Evaluation;
 use App\Models\Course;
+use App\Models\Inscription;
 use Illuminate\Support\Facades\Auth;
 
 class EvaluationController extends Controller
@@ -38,15 +39,39 @@ class EvaluationController extends Controller
      */
     public function create()
     {
-        //
+        // $user = Auth::user();
+        // if ($user->role === 'teacher') {
+        //     $courses = Course::where('teacher_id', $user->id)->pluck('id'); // Teacher's courses
+        //     $inscriptions = Inscription::with('course', 'student')->whereIn('course_id', $courses); // Courses's inscriptions
+        // }
+        // return view('private.evaluations.create', compact('inscriptions', 'user'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage or update it if exists.
      */
     public function store(Request $request)
     {
-        //
+
+        $evaluation = Evaluation::where('course_id', $request->course_id)
+            ->where('student_id', $request->student_id)
+            ->first();
+
+
+        if (!$evaluation) {
+            $evaluation = new Evaluation();
+            $evaluation->course_id = $request->course_id;
+            $evaluation->student_id = $request->student_id;
+        }
+
+
+        $evaluation->final_grade = $request->finalGrade;
+        $evaluation->comments = $request->comments;
+
+
+        $evaluation->save();
+
+        return redirect()->route('public.evaluation.index')->with('success', 'Evaluation created successfully.');
     }
 
     /**

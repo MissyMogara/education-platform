@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Category;
+use App\Models\Inscription;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,10 +36,12 @@ class CourseController extends Controller
     public function show($id)
     {
         $course = Course::with(['teacher', 'category'])->where('id', $id)->first();
+        $inscriptions = Inscription::where('course_id', $course->id)->where('status', 'confirmed')->get(); // Student cant enroll twice so no repeats
+
         if (!$course) {
             abort(404);
         }
-        return view('public.courses.show', compact('course'));
+        return view('public.courses.show', compact('course', 'inscriptions'));
     }
 
 

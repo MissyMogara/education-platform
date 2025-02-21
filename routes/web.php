@@ -4,6 +4,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\CourseMaterialController;
 use App\Models\Inscription;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,11 @@ Route::middleware(['auth', 'checkAdminOrTeacher'])->group(function () {
     Route::put('/inscriptions/{id}/reject', [InscriptionController::class, 'reject'])->name('private.inscription.reject');
     Route::get('/inscriptions/search', [InscriptionController::class, 'search'])->name('private.inscription.search');
     Route::post('/evaluations', [EvaluationController::class, 'store'])->name('private.evaluation.store');
+    Route::get('/materials/{id}', [CourseMaterialController::class, 'create'])->name('private.material.create');
+    Route::post('/materials', [CourseMaterialController::class, 'store'])->name('private.material.store');
+    Route::get('/materials/{id}/edit', [CourseMaterialController::class, 'edit'])->name('private.material.edit'); // FALTA
+    Route::put('/materials/{id}/update', [CourseMaterialController::class, 'update'])->name('private.material.update'); // FALTA
+    Route::delete('/materials/{id}/delete', [CourseMaterialController::class, 'destroy'])->name('private.material.destroy');
 });
 
 /**

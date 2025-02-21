@@ -45,7 +45,7 @@
                                 <div class="ms-1 me-1">
                                     <x-buttons.edit-button label="Editar" route="private.course.edit" :id="$course->id" />
                                 </div>
-                                <div class="ms-1">
+                                <div class="ms-1 me-1">
                                     <x-buttons.delete-button label="Borrar" route="private.course.destroy" :id="$course->id" 
                                         :message="'¿Estás seguro de que deseas eliminar este curso?'" />
                                 </div>

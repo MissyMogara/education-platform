@@ -7,6 +7,11 @@
     </x-slot>
     <!-- Course details-->
     <div class="p-4 flex justify-center text-white">
+        @if (session('success'))
+        <div class="bg-green-500 text-white p-4 rounded mb-4 mt-4">
+            {{ session('success') }}
+        </div>
+        @endif
         <div class="bg-slate-700 w-3/4 rounded-md p-4">
             <h1 class="text-2xl capitalize text-center">
                 <!-- If user is admin then can see the course's id -->
@@ -34,6 +39,30 @@
             @endif
             @if (Auth::user() && (Auth::user()->isTeacher() || Auth::user()->isAdmin()))
                     <div>
+                        <h3 class="text-1xl mb-2">Material del curso</h3>
+                        <hr>
+                            <ul>
+                                @foreach ( $courseMaterials as $courseMaterial)
+                                <li class="flex justify-around mt-2 mb-2">
+                                    <h4 class="capitalize">
+                                        {{$courseMaterial->type}}        
+                                    </h4>   
+                                    <p>
+                                        <a href="{{ $courseMaterial->url }}">{{ $courseMaterial->url }}</a>
+                                    </p>
+                                    <div>
+                                        <div>
+                                            <x-buttons.delete-button label="Borrar" route="private.material.destroy" :id="$courseMaterial->id" 
+                                                :message="'¿Estás seguro de que deseas eliminar este material?'" />
+                                        </div>
+                                        <div>
+
+                                        </div>
+                                    </div>
+                                </li>   
+                                @endforeach
+                            </ul>
+                        <hr>
                         <h3 class="text-1xl mb-2">Alumnos inscritos</h3>
                         <hr>
                         <ul>
@@ -86,9 +115,14 @@
                 :student="Auth::user()->id ?? null" 
                 />
             @endif
-            <div class="ms-2">
-                <x-buttons.link-to-button  route="public.course.index" label="Volver"/>
-            </div>
+                <div class="ms-2">
+                    <x-buttons.link-to-button  route="public.course.index" label="Volver"/>
+                </div>
+            @if (Auth::user() && (Auth::user()->isTeacher() || Auth::user()->isAdmin()))
+                <div class="ms-1">
+                    <x-buttons.view-button route="private.material.create" :id="$course->id" label="Añadir material" />
+                </div>
+            @endif
             </div>
             @if (session('error'))
                 <div class="bg-red-500 text-white p-4 rounded mb-4 mt-4">

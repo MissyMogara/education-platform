@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Category;
 use App\Models\Inscription;
 use App\Models\User;
+use App\Models\CourseMaterial;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -37,11 +38,11 @@ class CourseController extends Controller
     {
         $course = Course::with(['teacher', 'category'])->where('id', $id)->first();
         $inscriptions = Inscription::where('course_id', $course->id)->where('status', 'confirmed')->get(); // Student cant enroll twice so no repeats
-
+        $courseMaterials = CourseMaterial::where('course_id', $course->id)->get();
         if (!$course) {
             abort(404);
         }
-        return view('public.courses.show', compact('course', 'inscriptions'));
+        return view('public.courses.show', compact('course', 'inscriptions', 'courseMaterials'));
     }
 
 

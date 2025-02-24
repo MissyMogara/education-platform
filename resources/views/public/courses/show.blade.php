@@ -50,13 +50,13 @@
                                     <p>
                                         <a href="{{ $courseMaterial->url }}">{{ $courseMaterial->url }}</a>
                                     </p>
-                                    <div>
+                                    <div class="flex jusfify-around">
                                         <div>
                                             <x-buttons.delete-button label="Borrar" route="private.material.destroy" :id="$courseMaterial->id" 
                                                 :message="'¿Estás seguro de que deseas eliminar este material?'" />
                                         </div>
-                                        <div>
-
+                                        <div class="mt-2 ms-2">
+                                            <x-buttons.edit-button label="Editar" route="private.material.edit" :id="$courseMaterial->id" />
                                         </div>
                                     </div>
                                 </li>   

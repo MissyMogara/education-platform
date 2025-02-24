@@ -31,8 +31,8 @@ Route::middleware(['auth', 'checkAdminOrTeacher'])->group(function () {
     Route::post('/evaluations', [EvaluationController::class, 'store'])->name('private.evaluation.store');
     Route::get('/materials/{id}', [CourseMaterialController::class, 'create'])->name('private.material.create');
     Route::post('/materials', [CourseMaterialController::class, 'store'])->name('private.material.store');
-    Route::get('/materials/{id}/edit', [CourseMaterialController::class, 'edit'])->name('private.material.edit'); // FALTA
-    Route::put('/materials/{id}/update', [CourseMaterialController::class, 'update'])->name('private.material.update'); // FALTA
+    Route::get('/materials/{id}/edit', [CourseMaterialController::class, 'edit'])->name('private.material.edit');
+    Route::put('/materials/{id}/update', [CourseMaterialController::class, 'update'])->name('private.material.update');
     Route::delete('/materials/{id}/delete', [CourseMaterialController::class, 'destroy'])->name('private.material.destroy');
 });
 

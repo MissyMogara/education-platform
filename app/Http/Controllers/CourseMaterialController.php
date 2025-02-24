@@ -51,7 +51,12 @@ class CourseMaterialController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $material = CourseMaterial::find($id);
+        $course = Course::where('id', $material->course_id)->first();
+        if (!$material) {
+            abort(404);
+        }
+        return view('private.materials.edit', compact('material', 'course'));
     }
 
     /**
@@ -59,7 +64,14 @@ class CourseMaterialController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $material = CourseMaterial::find($id);
+        if (!$material) {
+            abort(404);
+        }
+        $material->type = $request->type;
+        $material->url = $request->url;
+        $material->save();
+        return redirect()->route('public.course.index')->with('success', 'Material actualizado correctamente.');
     }
 
     /**

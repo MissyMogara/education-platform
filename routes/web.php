@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\CourseMaterialController;
+use App\Http\Controllers\UserController;
 use App\Models\Inscription;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +17,7 @@ Route::get('/', function () {
  * Admin routes
  */
 Route::middleware(['auth', 'checkAdminOrTeacher'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
     Route::get('/courses/create', [CourseController::class, 'create'])->name('private.course.create');
     Route::post('/courses', [CourseController::class, 'store'])->name('private.course.store');
     Route::get('/courses/{id}/edit', [CourseController::class, 'edit'])->name('private.course.edit');
@@ -34,6 +33,9 @@ Route::middleware(['auth', 'checkAdminOrTeacher'])->group(function () {
     Route::get('/materials/{id}/edit', [CourseMaterialController::class, 'edit'])->name('private.material.edit');
     Route::put('/materials/{id}/update', [CourseMaterialController::class, 'update'])->name('private.material.update');
     Route::delete('/materials/{id}/delete', [CourseMaterialController::class, 'destroy'])->name('private.material.destroy');
+    Route::post('/users', [UserController::class, 'create'])->name('private.user.create');
+    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('private.user.edit');
+    Route::put('/users/{id}', [UserController::class, 'update'])->name('private.user.update');
 });
 
 /**
@@ -45,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/courses/{course_id}/student/{student_id}', [InscriptionController::class, 'enroll'])->name('public.course.enroll');
     Route::get('/evaluations', [EvaluationController::class, 'index'])->name('public.evaluation.index');
     Route::get('/evaluations/{id}', [EvaluationController::class, 'show'])->name('public.evaluation.show');
+    Route::get('/users', [UserController::class, 'show'])->name('public.user.show');
 });
 
 Route::middleware('auth')->group(function () {

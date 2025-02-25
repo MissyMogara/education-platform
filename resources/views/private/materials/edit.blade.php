@@ -7,9 +7,9 @@
 
     <div class="p-4 flex justify-center">
         <x-form.form ruta="{{ route('private.material.update', ['id' => $material->id]) }}" nombre="Editar material" metodo="put">
-            <input type="hidden" name="course_id" value="{{$course->id}}">
+            <input type="hidden" name="course_id" value="{{$course->id}}" required="required">
             <label for="type">Tipo</label>
-            <select name="type" id="type">
+            <select name="type" id="type" required>
                 @if ($material->type == 'pdf')
                     <option value="pdf" selected>{{ __('PDF') }}</option>
                 @else

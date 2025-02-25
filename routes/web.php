@@ -33,9 +33,12 @@ Route::middleware(['auth', 'checkAdminOrTeacher'])->group(function () {
     Route::get('/materials/{id}/edit', [CourseMaterialController::class, 'edit'])->name('private.material.edit');
     Route::put('/materials/{id}/update', [CourseMaterialController::class, 'update'])->name('private.material.update');
     Route::delete('/materials/{id}/delete', [CourseMaterialController::class, 'destroy'])->name('private.material.destroy');
-    Route::post('/users', [UserController::class, 'create'])->name('private.user.create');
+    Route::get('/users/teacher', [UserController::class, 'createTeacher'])->name('private.user.create.teacher');
+    Route::get('/users/student', [UserController::class, 'createStudent'])->name('private.user.create.student');
+    Route::post('/users', [UserController::class, 'store'])->name('private.user.store');
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('private.user.edit');
-    Route::put('/users/{id}', [UserController::class, 'update'])->name('private.user.update');
+    Route::put('/users/{id}/update', [UserController::class, 'update'])->name('private.user.update');
+    Route::delete('/users/{id}/delete', [UserController::class, 'destroy'])->name('private.user.destroy');
 });
 
 /**
@@ -47,7 +50,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/courses/{course_id}/student/{student_id}', [InscriptionController::class, 'enroll'])->name('public.course.enroll');
     Route::get('/evaluations', [EvaluationController::class, 'index'])->name('public.evaluation.index');
     Route::get('/evaluations/{id}', [EvaluationController::class, 'show'])->name('public.evaluation.show');
-    Route::get('/users', [UserController::class, 'show'])->name('public.user.show');
+    Route::get('/users/{id}', [UserController::class, 'show'])->name('public.user.show');
 });
 
 Route::middleware('auth')->group(function () {

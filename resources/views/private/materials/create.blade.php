@@ -7,15 +7,15 @@
 
     <div class="p-4 flex justify-center">
         <x-form.form ruta="{{ route('private.material.store') }}" nombre="{{$course->name}}" metodo="POST">
-            <input type="hidden" name="course_id" value="{{$course->id}}">
+            <input type="hidden" name="course_id" value="{{$course->id}}" required="required">
             <label for="type">Tipo</label>
-            <select name="type" id="type">
+            <select name="type" id="type" required>
                 <option value="pdf">{{ __('PDF') }}</option>
                 <option value="video">{{ __('Vídeo') }}</option>
                 <option value="link">{{ __('Link') }}</option>
                 <option value="repository">{{ __('Repositorio') }}</option>
             </select>
-            <x-form.input tipo="text" nombre="url" id="url" label="URL"/>
+            <x-form.input tipo="text" nombre="url" id="url" label="URL" required="required" />
             <div class="flex justify-center items-center">
                 <div>
                     <x-buttons.save-button />

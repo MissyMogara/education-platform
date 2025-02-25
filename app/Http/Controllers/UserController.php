@@ -19,9 +19,19 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function createTeacher()
     {
-        //
+        $option = "teacher";
+        return view('private.users.create', compact('option'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function createStudent()
+    {
+        $option = "student";
+        return view('private.users.create', compact('option'));
     }
 
     /**
@@ -29,7 +39,30 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User();
+        $user->name = $request->name;
+        if ($request->last_name) {
+            $user->last_name = $request->last_name;
+        }
+        $user->email = $request->email;
+        $user->dni = $request->dni;
+        $user->password = bcrypt($request->password);
+        $user->role = $request->role;
+        if ($request->phone) {
+            $user->phone = $request->phone;
+        }
+        if ($request->address) {
+            $user->address = $request->address;
+        }
+        if ($request->city) {
+            $user->city = $request->city;
+        }
+        if ($request->specialty) {
+            $user->specialty = $request->specialty;
+        }
+        $user->save();
+
+        return redirect()->route('dashboard')->with('success', 'Usuario creado con éxisto');
     }
 
     /**
@@ -38,7 +71,7 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = User::find($id);
-        return view('private.users.show', compact('user'));
+        return view('public.users.show', compact('user'));
     }
 
     /**
@@ -46,7 +79,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::find($id);
+        return view('private.users.edit', compact('user'));
     }
 
     /**
@@ -54,7 +88,32 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $request->name;
+        if ($request->last_name) {
+            $user->last_name = $request->last_name;
+        }
+        $user->email = $request->email;
+
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
+
+        if ($request->phone) {
+            $user->phone = $request->phone;
+        }
+        if ($request->address) {
+            $user->address = $request->address;
+        }
+        if ($request->city) {
+            $user->city = $request->city;
+        }
+        if ($request->specialty) {
+            $user->specialty = $request->specialty;
+        }
+        $user->update();
+
+        return redirect()->route('dashboard')->with('success', 'Usuario actualizado con éxito');
     }
 
     /**
@@ -62,6 +121,9 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Usuario eliminado con éxito');
     }
 }

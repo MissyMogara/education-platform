@@ -45,6 +45,7 @@ Route::middleware(['auth', 'checkAdminOrTeacher'])->group(function () {
  * Shared routes (Admin and Student)
  */
 Route::middleware(['auth'])->group(function () {
+    Route::get('/home', [UserController::class, 'home'])->name('main');
     Route::get('/courses', [CourseController::class, 'index'])->name('public.course.index');
     Route::get('/courses/{id}', [CourseController::class, 'show'])->name('public.course.show');
     Route::post('/courses/{course_id}/student/{student_id}', [InscriptionController::class, 'enroll'])->name('public.course.enroll');

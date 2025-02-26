@@ -8,6 +8,13 @@ use App\Models\User;
 class UserController extends Controller
 {
     /**
+     * Shows the main page
+     */
+    public function home()
+    {
+        return view('main');
+    }
+    /**
      * Display a listing of the resource.
      */
     public function index()

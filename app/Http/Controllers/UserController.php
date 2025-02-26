@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Inscription;
 
 class UserController extends Controller
 {
@@ -129,6 +130,11 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::find($id);
+        $inscriptions = Inscription::where('estado', 'confirmada')->exists();
+
+        if ($inscriptions) {
+            return redirect()->route('dashboard')->with('error', 'No se puede eliminar un usuario que tiene inscripciones confirmadas');
+        }
         $user->delete();
 
         return redirect()->route('dashboard')->with('success', 'Usuario eliminado con éxito');

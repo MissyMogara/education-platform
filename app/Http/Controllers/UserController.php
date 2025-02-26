@@ -130,7 +130,7 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::find($id);
-        $inscriptions = Inscription::where('estado', 'confirmada')->exists();
+        $inscriptions = Inscription::where('status', 'confirmed')->exists();
 
         if ($inscriptions) {
             return redirect()->route('dashboard')->with('error', 'No se puede eliminar un usuario que tiene inscripciones confirmadas');

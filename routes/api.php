@@ -10,27 +10,23 @@ Route::get('/', function () {
     return 'API';
 });
 
-// Route::post('/api/login', function (Request $request) {
-//     $request->validate([
-//         'email' => 'required|email',
-//         'password' => 'required|password',
-//     ]);
+Route::post('/login', function (Request $request) {
 
-//     $user = User::where('email', $request->email)->first();
+    $user = User::where('email', $request->email)->first();
 
-//     if ($user && Hash::check($request->password, $user->password)) {
-//         $token = $user->createToken('auth_token')->plainTextToken;
+    if ($user && Hash::check($request->password, $user->password)) {
+        $token = $user->createToken('auth_token')->plainTextToken;
 
-//         return response()->json([
-//             'message' => 'Inicio de sesión exitoso',
-//             'token' => $token,
-//         ], 200);
-//     } else {
-//         return response()->json([
-//             'message' => 'Correo electrónico o contraseña incorrectos'
-//         ], 401);
-//     }
-// });
+        return response()->json([
+            'message' => 'Inicio de sesión exitoso',
+            'token' => $token,
+        ], 200);
+    } else {
+        return response()->json([
+            'message' => 'Correo electrónico o contraseña incorrectos'
+        ], 401);
+    }
+});
 
 Route::get('/user', function (Request $request) {
     return $request->user();

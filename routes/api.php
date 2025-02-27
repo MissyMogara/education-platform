@@ -5,29 +5,23 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\APIController;
+use Illuminate\Auth\AuthenticationException;
+
 
 Route::get('/', function () {
     return 'API';
 });
 
-Route::post('/login', function (Request $request) {
+Route::post('/login', [APIController::class, 'login']);
 
-    $user = User::where('email', $request->email)->first();
-
-    if ($user && Hash::check($request->password, $user->password)) {
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json([
-            'message' => 'Inicio de sesión exitoso',
-            'token' => $token,
-        ], 200);
-    } else {
-        return response()->json([
-            'message' => 'Correo electrónico o contraseña incorrectos'
-        ], 401);
-    }
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::get('/cursos', [APIController::class, 'getCourses']);
+    Route::get('/cursos/{id}', [APIController::class, 'getCoursesById']);
+    Route::get('/alumnos/{dni}/inscripciones', [APIController::class, 'getInscriptionsByStudent']);
+    Route::post('/inscripciones', [APIController::class, 'enrollStudent']);
+    Route::delete('/inscripciones/{id}', [APIController::class, 'unenrollStudent']);
 });
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');

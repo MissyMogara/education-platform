@@ -127,4 +127,29 @@ class APIController extends Controller
 
         return response()->json(['message' => 'Inscripción cancelada'], 200);
     }
+
+    /**
+     * Create a course
+     */
+    public function createCourse(Request $request)
+    {
+        $course = Course::create($request->all());
+        return response()->json($course, 201);
+    }
+
+    /**
+     * Delete a course with all the inscriptions
+     */
+    public function deleteCourse($id)
+    {
+        $course = Course::find($id);
+
+        if (!$course) {
+            return response()->json(['message' => 'Curso no encontrado'], 404);
+        }
+
+        $course->delete();
+
+        return response()->json(['message' => 'Curso eliminado'], 200);
+    }
 }

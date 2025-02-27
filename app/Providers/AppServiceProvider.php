@@ -2,7 +2,12 @@
 
 namespace App\Providers;
 
+use App\Policies\APICoursePolicy;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use App\Models\Course;
+use App\Policies\UserPolicy;
+use App\Models\User;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::policy(Course::class, APICoursePolicy::class);
+        Gate::policy(User::class, UserPolicy::class);
     }
 }

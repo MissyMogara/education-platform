@@ -24,4 +24,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/alumnos/{dni}/inscripciones', [APIController::class, 'getInscriptionsByStudent']);
     Route::post('/inscripciones', [APIController::class, 'enrollStudent']);
     Route::delete('/inscripciones/{id}', [APIController::class, 'unenrollStudent']);
+    Route::post('/cursos', [APIController::class, 'createCourse'])->middleware('can:create,App\Models\Course');
+    Route::delete('/cursos/{id}', [APIController::class, 'deleteCourse'])->middleware('can:delete,App\Models\Course');
 });

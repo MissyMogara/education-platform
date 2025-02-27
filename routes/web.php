@@ -37,8 +37,8 @@ Route::middleware(['auth', 'checkAdminOrTeacher'])->group(function () {
     Route::get('/users/student', [UserController::class, 'createStudent'])->name('private.user.create.student');
     Route::post('/users', [UserController::class, 'store'])->name('private.user.store');
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('private.user.edit');
-    Route::put('/users/{id}/update', [UserController::class, 'update'])->name('private.user.update');
-    Route::delete('/users/{id}/delete', [UserController::class, 'destroy'])->name('private.user.destroy');
+    Route::put('/users/{id}/update', [UserController::class, 'update'])->name('private.user.update')->middleware('can:update,App\Models\User');
+    Route::delete('/users/{id}/delete', [UserController::class, 'destroy'])->name('private.user.destroy')->middleware('can:delete,App\Models\User');
 });
 
 /**

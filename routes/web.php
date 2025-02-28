@@ -6,6 +6,7 @@ use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\CourseMaterialController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\EnsureIsTeacherOrAdmin;
 use App\Models\Inscription;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +17,7 @@ Route::get('/', function () {
 /**
  * Admin routes
  */
-Route::middleware(['auth', 'checkAdminOrTeacher'])->group(function () {
+Route::middleware(['auth', \App\Http\Middleware\EnsureIsTeacherOrAdmin::class])->group(function () {
     Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
     Route::get('/courses/create', [CourseController::class, 'create'])->name('private.course.create');
     Route::post('/courses', [CourseController::class, 'store'])->name('private.course.store');

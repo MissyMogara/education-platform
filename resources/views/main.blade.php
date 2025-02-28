@@ -7,7 +7,7 @@
     </x-slot>
     <div class="p-4">
         
-        <main class="container mx-auto my-8 p-4 bg-white rounded-lg shadow">
+        <main class="container mx-auto my-8 p-4 bg-white dark:bg-gray-800 dark:text-white rounded-lg shadow">
             <section id="sobre-nosotros" class="mb-8">
                 <h2 class="text-2xl font-bold mb-4">Sobre Nosotros</h2>
                 <p class="mb-4">Bienvenidos a nuestra plataforma de educación online. Nuestra misión es proporcionar una experiencia de aprendizaje integral y accesible para todos nuestros usuarios. Ofrecemos una variedad de cursos en diferentes áreas como programación, diseño, marketing y más.</p>

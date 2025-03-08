@@ -38,11 +38,11 @@ class InscriptionController extends Controller
         // Enroll the student in the course
         $course->inscriptions()->create(['student_id' => $studentId]);
 
-        Inscription::create([
-            'course_id' => $courseId,
-            'student_id' => $studentId,
-            'status' => 'pending',
-        ]);
+        // Inscription::create([
+        //     'course_id' => $courseId,
+        //     'student_id' => $studentId,
+        //     'status' => 'pending',
+        // ]);
         return redirect()->route('public.course.index');
     }
 

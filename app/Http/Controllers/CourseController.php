@@ -21,7 +21,7 @@ class CourseController extends Controller
         $user = Auth::user();
         if ($user->role === 'admin') {
             $courses = Course::all()->paginate(10);
-            return view('dashboard', compact('courses'));
+            return view('public.courses.index', compact('courses'));
         } else if ($user->role === 'teacher') {
             $courses = Course::where('teacher_id', $user->id)->paginate(10);
             return view('public.courses.index', compact('courses'));

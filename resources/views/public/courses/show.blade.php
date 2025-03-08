@@ -37,31 +37,35 @@
             @if (Auth::user() && Auth::user()->isAdmin())
                 <p>{{ $course->status }}</p>
             @endif
+            <div>
+                <h3 class="text-1xl mb-2">Material del curso</h3>
+                <hr>
+                    <ul>
+                        @foreach ( $courseMaterials as $courseMaterial)
+                        <li class="flex justify-around mt-2 mb-2">
+                            <h4 class="capitalize">
+                                {{$courseMaterial->type}}        
+                            </h4>   
+                            <p>
+                                <a href="{{ $courseMaterial->url }}">{{ $courseMaterial->url }}</a>
+                            </p>
+                            @if (Auth::user() && (Auth::user()->isTeacher() || Auth::user()->isAdmin()))
+                            <div class="flex jusfify-around">
+                                <div>
+                                    <x-buttons.delete-button label="Borrar" route="private.material.destroy" :id="$courseMaterial->id" 
+                                        :message="'¿Estás seguro de que deseas eliminar este material?'" />
+                                </div>
+                                <div class="mt-2 ms-2">
+                                    <x-buttons.edit-button label="Editar" route="private.material.edit" :id="$courseMaterial->id" />
+                                </div>
+                            </div>
+                            @endif
+                        </li>   
+                        @endforeach
+                    </ul>
+            </div>
             @if (Auth::user() && (Auth::user()->isTeacher() || Auth::user()->isAdmin()))
                     <div>
-                        <h3 class="text-1xl mb-2">Material del curso</h3>
-                        <hr>
-                            <ul>
-                                @foreach ( $courseMaterials as $courseMaterial)
-                                <li class="flex justify-around mt-2 mb-2">
-                                    <h4 class="capitalize">
-                                        {{$courseMaterial->type}}        
-                                    </h4>   
-                                    <p>
-                                        <a href="{{ $courseMaterial->url }}">{{ $courseMaterial->url }}</a>
-                                    </p>
-                                    <div class="flex jusfify-around">
-                                        <div>
-                                            <x-buttons.delete-button label="Borrar" route="private.material.destroy" :id="$courseMaterial->id" 
-                                                :message="'¿Estás seguro de que deseas eliminar este material?'" />
-                                        </div>
-                                        <div class="mt-2 ms-2">
-                                            <x-buttons.edit-button label="Editar" route="private.material.edit" :id="$courseMaterial->id" />
-                                        </div>
-                                    </div>
-                                </li>   
-                                @endforeach
-                            </ul>
                         <hr>
                         <h3 class="text-1xl mb-2">Alumnos inscritos</h3>
                         <hr>

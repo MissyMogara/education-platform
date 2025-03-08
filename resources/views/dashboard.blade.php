@@ -22,10 +22,12 @@
                             <div class="flex">
                                 <div class="mb-5 mt-5 me-2 flex justify-center">
                                     <x-buttons.link-to-button label="Crear Alumno" route="private.user.create.student" />
-                                </div> 
+                                </div>
+                            @if (Auth::user()->isAdmin())
                                 <div class="mb-5 mt-5 ms-2 flex justify-center">
                                     <x-buttons.link-to-button label="Crear Profesor" route="private.user.create.teacher" />
                                 </div>
+                            @endif 
                             </div>
 
                             <thead>
